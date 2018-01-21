@@ -1,19 +1,19 @@
 var mongoose = require('mongoose');
 // var autoIncrement = require("mongodb-autoincrement");
-var schema = mongoose.schema;
+var Schema = mongoose.Schema;
 
 // mongoose.plugin(autoIncrement.mongoosePlugin, optionalOptions);
 
 
-var counterSchema = schema({
-    _id : {type:string , required:true},
-    seq : {type:number , default:0}
+var counterSchema = Schema({
+    _id : {type:String , required:true},
+    seq : {type:Number , default:0}
 });
 
-var counter = mongoose.model('counter', CounterSchema);
+var counter = mongoose.model('counter', counterSchema);
 
-var urlSchema = new schema({
-    _id : {type:number , index:true},
+var urlSchema = new Schema({
+    _id : {type:Number , index:true},
     long_url : String,
     created_at : Date
 });
