@@ -11,7 +11,7 @@ var url = require('./models/url');
 
 mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
 
-app.use(bodyparser.json);
+app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended : true}));
 
 app.use(express.static(path.join(__dirname , 'public')));
@@ -66,14 +66,6 @@ app.get('/:encoded_id', function (req, res) {
         }
     })
 })
-
-// app.post('/api/shorten',function (req,res) {
-//
-// });
-//
-// app.get('/:encoded_id',function (req,res) {
-//
-// });
 
 var server = app.listen(3000 , function () {
     console.log("chalu hoja!!!");
