@@ -12,7 +12,6 @@ const shortUrl = new Schema({
     short:{
         type: String,
         require: true,
-        default: shortId.generate
     },
     clicks:{
         type: Number,
