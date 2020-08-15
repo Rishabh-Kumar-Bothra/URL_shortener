@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cryptoRandom = require('crypto-random-string');
-const atob = require('atob');
-const btoa = require('btoa');
+const cors = require('cors');
+const helmet = require('helmet');
 const shorturl = require('./models/shortUrl');
 
 dotenv.config();
@@ -11,6 +11,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(cors());
+app.use(helmet());
 
 mongoose.connect(process.env.dbURI,{useUnifiedTopology:true, useNewUrlParser: true })
 .then(()=>{
