@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cryptoRandom = require('crypto-random-string');
 const cors = require('cors');
+const path = require('path')
 const helmet = require('helmet');
 const shorturl = require('./models/shortUrl');
 
@@ -25,7 +26,7 @@ mongoose.connect(process.env.dbURI,{useUnifiedTopology:true, useNewUrlParser: tr
     console.log('mongo connection unsuccessfull error: ',err);
 })
 
-
+app.use(express.static(path.join(__dirname , 'static/')))
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -66,15 +67,21 @@ app.get('/',async (req,res)=>{
 app.get('/:short',async (req,res)=>{
     // console.log(req.params.short)
     let url = await shorturl.findOne({short:req.params.short});
-    url.clicks++;
-    await url.save();
+    if(url){
+        url.clicks++;
+        await url.save();
+        res.redirect(url.full);
+    }
+    else{
+        res.redirect('/')
+    }
     // console.log('url',url)
-    res.redirect(url.full);
 })
 
 app.post('/addUrl',async (req,res)=>{
 
     const url = req.body.full;
+    console.log(url);
     let already_exists = await shorturl.findOne({full: url});
     if(already_exists){
         res.redirect('/');
